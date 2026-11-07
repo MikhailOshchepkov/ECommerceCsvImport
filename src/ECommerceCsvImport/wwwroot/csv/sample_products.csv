@@ -1,0 +1,12 @@
+﻿sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,warranty_months,model_number
+1001,Wi-Fi роутер Дом.ру Wave Plus,Роутер Wi-Fi 6 AX3000 для квартиры,3990,RUB,Роутеры,25,/images/wave-plus.jpg,true,Дом.ру,12,Wave Plus AX3000
+1002,ТВ-приставка Movix Go,Смарт-приставка Android TV в формате донгла,4990,RUB,ТВ-приставки,30,/images/movix-go.jpg,true,Movix,12,Movix Go
+1003,ТВ-приставка Movix Pro Voice,Приставка 4K с голосовым поиском,6990,RUB,ТВ-приставки,12,/images/movix-pro-voice.jpg,false,Movix,12,Movix Pro Voice
+1004,Домашняя камера Omny base Luna 2,Wi-Fi камера Full HD с ИК-подсветкой до 7 м,3490,RUB,Видеонаблюдение,15,/images/luna2.jpg,true,Omny,12,Luna 2
+1005,Уличная IP-камера Omny base miniDome2E,Антивандальная камера с ИК-подсветкой до 25 м,7990,RUB,Видеонаблюдение,6,/images/minidome.jpg,true,Omny,24,miniDome2E v1.1
+1006,Mesh-система TP-Link Deco X20 (2 шт.),Бесшовная сеть Wi-Fi 6 для большой квартиры,12990,RUB,Роутеры,5,/images/deco-x20.jpg,true,TP-Link,36,Deco X20-2
+1007,Wi-Fi роутер TP-Link Archer AX23,Двухдиапазонный роутер Wi-Fi 6,5490,RUB,Роутеры,10,/images/archer-ax23.jpg,true,TP-Link,36,Archer AX23
+1008,Умная розетка TP-Link Tapo P100,Управление электроприборами со смартфона,990,RUB,Умный дом,40,/images/tapo-p100.jpg,true,TP-Link,24,Tapo P100
+1009,Умная лампа TP-Link Tapo L530E,Цветная Wi-Fi LED-лампа с цоколем E27,1190,RUB,Умный дом,35,/images/tapo-l530e.jpg,true,TP-Link,24,Tapo L530E
+1010,Усилитель Wi-Fi TP-Link RE200,Расширение зоны покрытия Wi-Fi,2290,RUB,Сетевое оборудование,14,/images/re200.jpg,false,TP-Link,36,RE200
+1011,Кабель HDMI 2.0 1.5 м,,490,RUB,Аксессуары,50,,true,Cablexpert,12,CC-HDMI4-1.5M

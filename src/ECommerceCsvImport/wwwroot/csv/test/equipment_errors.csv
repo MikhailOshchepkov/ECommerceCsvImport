@@ -1,0 +1,8 @@
+sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,warranty_months,model_number
+2001,ТВ-приставка Movix Pro,Приставка 4K с поддержкой Dolby Atmos,5990,RUB,ТВ-приставки,9,/images/movix-pro.jpg,true,Movix,12,Movix Pro
+2002,Wi-Fi роутер TP-Link Archer AX55,,abc,RUB,Роутеры,6,/images/ax55.jpg,true,TP-Link,36,Archer AX55
+2003,Умная камера TP-Link Tapo C200,Поворотная Wi-Fi камера,-1,RUB,Видеонаблюдение,-2,/images/tapo-c200.jpg,да,,24,
+2004,"Пульт Movix, голосовой","Пульт с микрофоном, Bluetooth",1490,rub,Аксессуары,20,/images/remote.jpg,1,Movix,12,MVX-RC01
+2001,ТВ-приставка Movix Pro (дубль),Повтор артикула,5990,RUB,ТВ-приставки,3,,true,Movix,12,
+2005,Wi-Fi адаптер TP-Link Archer T2U,USB-адаптер для компьютера,1290,,,11,,0,TP-Link,36,Archer T2U
+2006,Только два поля

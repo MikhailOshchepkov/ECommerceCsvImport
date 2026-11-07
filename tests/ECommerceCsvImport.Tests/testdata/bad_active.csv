@@ -1,0 +1,2 @@
+sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,warranty_months,model_number
+1007,Wi-Fi роутер TP-Link Archer AX23,Двухдиапазонный роутер Wi-Fi 6,5490,RUB,Роутеры,10,/images/archer-ax23.jpg,yes,TP-Link,36,Archer AX23

@@ -1,0 +1,3 @@
+sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,warranty_months,model_number
+3001,Домашняя камера Omny base Luna 2,Wi-Fi камера с ночным режимом,3490,RUB,Видеонаблюдение,5,/images/luna2.jpg,true,Omny,12,Luna 2
+3002,ТВ-приставка Movix Go,Приставка в формате донгла,4990,RUB,ТВ-приставки,2,/images/movix-go.jpg,true,Movix,12,Movix Go
