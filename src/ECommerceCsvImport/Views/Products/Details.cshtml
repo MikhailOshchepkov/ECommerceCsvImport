@@ -1,0 +1,43 @@
+@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Товары</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Sku</li>
+    </ol>
+</nav>
+
+<h1 class="mb-1">@Model.Name</h1>
+<p class="text-muted">
+    Артикул @Model.Sku ·
+    @if (Model.IsActive)
+    {
+        <span class="badge bg-success">Активен</span>
+    }
+    else
+    {
+        <span class="badge bg-secondary">Неактивен</span>
+    }
+</p>
+
+<div class="row g-4">
+    <div class="col-md-7">
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th style="width: 220px">Описание</th><td>@(string.IsNullOrEmpty(Model.Description) ? "—" : Model.Description)</td></tr>
+                <tr><th>Цена</th><td>@Model.Price.ToString("N2") @Model.Currency</td></tr>
+                <tr><th>Категория</th><td>@Model.CategoryName</td></tr>
+                <tr><th>Остаток на складе</th><td>@Model.StockQuantity шт.</td></tr>
+                <tr><th>Бренд</th><td>@Model.Brand</td></tr>
+                <tr><th>Модель</th><td>@(string.IsNullOrEmpty(Model.ModelNumber) ? "—" : Model.ModelNumber)</td></tr>
+                <tr><th>Гарантия</th><td>@Model.WarrantyMonths мес.</td></tr>
+                <tr><th>Изображение</th><td>@(string.IsNullOrEmpty(Model.ImageUrl) ? "—" : Model.ImageUrl)</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-outline-secondary">← К списку товаров</a>

@@ -1,0 +1,144 @@
+@model ProductsIndexViewModel
+@{
+    ViewData["Title"] = "Список товаров";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h1 class="mb-0">Товары</h1>
+    <div class="d-flex gap-2">
+        <a asp-action="Import" class="btn btn-primary">Импортировать товары</a>
+        @if (Model.AllProductsCount > 0)
+        {
+            <a asp-action="Export" class="btn btn-outline-secondary">Экспорт в CSV</a>
+            <form method="post" asp-action="Clear" onsubmit="return confirm('Удалить все товары из памяти?');">
+                <button type="submit" class="btn btn-outline-danger">Очистить</button>
+            </form>
+        }
+    </div>
+</div>
+
+@if (Model.AllProductsCount == 0)
+{
+    <div class="alert alert-info">
+        Товары еще не импортированы. Перейдите на страницу <a asp-action="Import">импорта</a>.
+    </div>
+}
+else
+{
+    <div class="row g-3 mb-3">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card"><div class="card-body">
+                <div class="text-muted small">Всего товаров</div>
+                <div class="fs-4 fw-semibold" id="total-count">@Model.TotalCount</div>
+                @if (Model.TotalCount != Model.AllProductsCount)
+                {
+                    <div class="small text-muted">из @Model.AllProductsCount</div>
+                }
+            </div></div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card"><div class="card-body">
+                <div class="text-muted small">Общая стоимость (сумма цен)</div>
+                <div class="fs-4 fw-semibold">@Model.TotalValue.ToString("N0") RUB</div>
+            </div></div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card"><div class="card-body">
+                <div class="text-muted small">Единиц на складе</div>
+                <div class="fs-4 fw-semibold">@Model.TotalStockQuantity</div>
+            </div></div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card"><div class="card-body">
+                <div class="text-muted small">Стоимость остатков</div>
+                <div class="fs-4 fw-semibold">@Model.TotalStockValue.ToString("N0") RUB</div>
+            </div></div>
+        </div>
+    </div>
+
+    <form method="get" asp-action="Index" class="row g-2 align-items-end mb-3">
+        <div class="col-md-4">
+            <label for="search" class="form-label small">Поиск по названию</label>
+            <input type="text" class="form-control" id="search" name="search" value="@Model.Search" placeholder="Например, Movix" />
+        </div>
+        <div class="col-md-3">
+            <label for="category" class="form-label small">Категория</label>
+            <select class="form-select" id="category" name="category">
+                <option value="">Все категории</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category" selected="@(category == Model.Category)">@category</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="sort" class="form-label small">Сортировка</label>
+            <select class="form-select" id="sort" name="sort">
+                <option value="" selected="@(Model.Sort == null)">Порядок импорта</option>
+                <option value="name" selected="@(Model.Sort == "name")">По названию</option>
+                <option value="price_asc" selected="@(Model.Sort == "price_asc")">Цена по возрастанию</option>
+                <option value="price_desc" selected="@(Model.Sort == "price_desc")">Цена по убыванию</option>
+                <option value="stock_asc" selected="@(Model.Sort == "stock_asc")">Остаток по возрастанию</option>
+                <option value="stock_desc" selected="@(Model.Sort == "stock_desc")">Остаток по убыванию</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-secondary flex-grow-1">Применить</button>
+            <a asp-action="Index" class="btn btn-outline-secondary" title="Сбросить">✕</a>
+        </div>
+    </form>
+
+    @if (Model.Products.Count == 0)
+    {
+        <div class="alert alert-warning">По заданным условиям товары не найдены.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle products-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Артикул</th>
+                        <th>Название</th>
+                        <th>Описание</th>
+                        <th class="text-end">Цена</th>
+                        <th>Валюта</th>
+                        <th>Категория</th>
+                        <th class="text-end">Остаток</th>
+                        <th>Активен</th>
+                        <th>Бренд</th>
+                        <th class="text-end">Гарантия, мес.</th>
+                        <th>Модель</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td>@product.Sku</td>
+                            <td><a asp-action="Details" asp-route-id="@product.Sku">@product.Name</a></td>
+                            <td class="small">@product.Description</td>
+                            <td class="text-end text-nowrap">@product.Price.ToString("N0")</td>
+                            <td>@product.Currency</td>
+                            <td>@product.CategoryName</td>
+                            <td class="text-end">@product.StockQuantity</td>
+                            <td>
+                                @if (product.IsActive)
+                                {
+                                    <span class="badge bg-success">Да</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Нет</span>
+                                }
+                            </td>
+                            <td>@product.Brand</td>
+                            <td class="text-end">@product.WarrantyMonths</td>
+                            <td>@product.ModelNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
