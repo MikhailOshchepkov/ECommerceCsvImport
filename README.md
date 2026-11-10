@@ -59,8 +59,20 @@ C# 12, .NET 8, ASP.NET Core MVC, Bootstrap 5, xUnit, Git. Внешние биб�
 dotnet run --project src/ECommerceCsvImport
 ```
 
-Открыть адрес из консоли (по умолчанию http://localhost:5129) → «Импорт» → нажать
-`/csv/sample_products.csv` → «Импортировать товары».
+Открыть адрес из консоли (по умолчанию http://localhost:5129). При запуске приложение само
+импортирует файл `wwwroot/csv/sample_products.csv`, поэтому на странице «Товары» сразу видны 11 товаров.
+
+Путь к файлу и включение автоимпорта задаются в `appsettings.json`:
+
+```json
+"Import": {
+  "AutoImportOnStartup": true,
+  "FilePath": "csv/sample_products.csv"
+}
+```
+
+Чтобы проверить импорт вручную: «Товары» → «Очистить» → «Импорт» → путь `/csv/sample_products.csv`
+(или любой файл из `/csv/test/`) → «Импортировать товары».
 
 **Тесты:**
 
