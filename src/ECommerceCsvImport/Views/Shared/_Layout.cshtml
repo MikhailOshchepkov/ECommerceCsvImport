@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
@@ -9,40 +9,38 @@
     <link rel="stylesheet" href="~/ECommerceCsvImport.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-            <div class="container">
-                <a class="navbar-brand fw-semibold" asp-controller="Products" asp-action="Index">ЭР-Телеком · Каталог оборудования</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Меню">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Products" asp-action="Index">Товары</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Products" asp-action="Import">Импорт</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @if (TempData["Message"] != null)
-            {
-                <div class="alert alert-success">@TempData["Message"]</div>
-            }
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+    @{
+        // Какой пункт меню подсветить
+        string action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+        bool isImportPage = action == "Import" || action == "ImportPost" || action == "Upload";
+    }
+    <header class="site-header">
         <div class="container">
-            Модуль импорта товаров из CSV · АО «ЭР-Телеком Холдинг» · ПП.02.01
+            <a class="logo" asp-controller="Products" asp-action="Index">
+                <span class="logo-mark">ЭР</span>
+                <span>
+                    <span class="logo-title d-block">Каталог оборудования</span>
+                    <span class="logo-subtitle">ЭР-Телеком · импорт товаров из CSV</span>
+                </span>
+            </a>
+            <ul class="main-menu">
+                <li><a class="@(isImportPage ? "" : "active")" asp-controller="Products" asp-action="Index">Товары</a></li>
+                <li><a class="@(isImportPage ? "active" : "")" asp-controller="Products" asp-action="Import">Импорт</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main role="main" class="container">
+        @if (TempData["Message"] != null)
+        {
+            <div class="message ok">@TempData["Message"]</div>
+        }
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            Модуль импорта товаров из CSV · АО «ЭР-Телеком Холдинг» · ПП.02.01 · Ощепков М.А., ИПо-42
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

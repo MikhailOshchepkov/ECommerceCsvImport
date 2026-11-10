@@ -3,56 +3,51 @@
     ViewData["Title"] = "Импорт товаров";
 }
 
-<h1 class="mb-4">Импорт товаров из CSV</h1>
+<div class="page-title">
+    <div>
+        <h1>Импорт товаров из CSV</h1>
+        <p>Укажите путь к файлу или загрузите его с компьютера</p>
+    </div>
+</div>
 
-<div class="row g-4">
+<div class="row g-3">
     <div class="col-lg-6">
-        <div class="card h-100">
-            <div class="card-header fw-semibold">Импорт по пути к файлу</div>
-            <div class="card-body">
-                <form method="post" asp-controller="Products" asp-action="Import">
-                    <div class="mb-3">
-                        <label for="filePath" class="form-label">Путь к CSV-файлу</label>
-                        <input type="text" class="form-control" id="filePath" name="filePath"
-                               value="@Model.FilePath" placeholder="/csv/sample_products.csv" />
-                        <div class="form-text">
-                            Путь относительно wwwroot (например, <code>/csv/sample_products.csv</code>)
-                            или полный путь на диске (например, <code>C:\data\products.csv</code>).
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Импортировать товары</button>
-                </form>
+        <div class="panel h-100 mb-0">
+            <div class="panel-title"><span class="step">1</span> Импорт по пути к файлу</div>
+            <form method="post" asp-controller="Products" asp-action="Import">
+                <label for="filePath" class="form-label">Путь к CSV-файлу</label>
+                <input type="text" class="form-control" id="filePath" name="filePath"
+                       value="@Model.FilePath" placeholder="/csv/sample_products.csv" />
+                <div class="hint">
+                    Путь относительно wwwroot (например, <code>/csv/sample_products.csv</code>)
+                    или полный путь на диске (например, <code>C:\data\products.csv</code>).
+                </div>
+                <button type="submit" class="btn btn-main mt-3">Импортировать товары</button>
+            </form>
 
-                @if (Model.SampleFiles.Count > 0)
+            @if (Model.SampleFiles.Count > 0)
+            {
+                <div class="hint mt-3 mb-2">Файлы для проверки (нажмите, чтобы подставить путь):</div>
+                @foreach (var sample in Model.SampleFiles)
                 {
-                    <div class="mt-3">
-                        <div class="small text-muted mb-1">Примеры файлов (нажмите, чтобы подставить путь):</div>
-                        @foreach (var sample in Model.SampleFiles)
-                        {
-                            <button type="button" class="btn btn-sm btn-outline-secondary me-1 mb-1 sample-file"
-                                    data-path="@sample">@sample</button>
-                        }
-                    </div>
+                    <button type="button" class="chip sample-file" data-path="@sample">@sample</button>
                 }
-            </div>
+            }
         </div>
     </div>
 
     <div class="col-lg-6">
-        <div class="card h-100">
-            <div class="card-header fw-semibold">Загрузка файла через браузер</div>
-            <div class="card-body">
-                <form method="post" asp-controller="Products" asp-action="Upload" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="file" class="form-label">Выберите CSV-файл</label>
-                        <input type="file" class="form-control" id="file" name="file" accept=".csv,text/csv" />
-                        <div class="form-text">
-                            Кодировка UTF-8 или Windows-1251, разделитель: запятая, точка с запятой или табуляция.
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Загрузить и импортировать</button>
-                </form>
-            </div>
+        <div class="panel h-100 mb-0">
+            <div class="panel-title"><span class="step">2</span> Загрузка файла через браузер</div>
+            <form method="post" asp-controller="Products" asp-action="Upload" enctype="multipart/form-data">
+                <label for="file" class="form-label">Выберите CSV-файл</label>
+                <input type="file" class="form-control" id="file" name="file" accept=".csv,text/csv" />
+                <div class="hint">
+                    Кодировка UTF-8 или Windows-1251, разделитель: запятая, точка с запятой или табуляция.
+                    Размер файла — до 5 МБ.
+                </div>
+                <button type="submit" class="btn btn-main mt-3">Загрузить и импортировать</button>
+            </form>
         </div>
     </div>
 </div>
@@ -61,86 +56,88 @@
 {
     var result = Model.Result;
 
-    <h2 class="mt-5 mb-3">Результат импорта</h2>
+    <div class="panel mt-4">
+        <div class="panel-title">Результат импорта</div>
 
-    @if (Model.SourceName != "")
-    {
-        <p class="text-muted mb-2">
-            Источник: <code>@Model.SourceName</code>
-            @if (result.EncodingName != "")
-            {
-                <span> · кодировка: @result.EncodingName</span>
-            }
-            <span> · разделитель: «@(result.Delimiter == '\t' ? "табуляция" : result.Delimiter.ToString())»</span>
-        </p>
-    }
+        @if (Model.SourceName != "")
+        {
+            <p class="hint mt-0 mb-3">
+                Файл: <code>@Model.SourceName</code>
+                @if (result.EncodingName != "")
+                {
+                    <span> · кодировка: @result.EncodingName</span>
+                }
+                <span> · разделитель: «@(result.Delimiter == '\t' ? "табуляция" : result.Delimiter.ToString())»</span>
+            </p>
+        }
 
-    <div class="alert @(result.ErrorCount == 0 ? "alert-success" : (result.ImportedCount > 0 ? "alert-warning" : "alert-danger"))">
         @if (result.ErrorCount == 0)
         {
-            <span>Импорт выполнен успешно.</span>
+            <div class="message ok">Импорт выполнен успешно.</div>
         }
         else if (result.ImportedCount > 0)
         {
-            <span>Импорт выполнен частично: некорректные строки пропущены.</span>
+            <div class="message warn">Импорт выполнен частично: строки с ошибками пропущены.</div>
         }
         else
         {
-            <span>Товары не импортированы.</span>
+            <div class="message error">Товары не импортированы.</div>
         }
-    </div>
 
-    <table class="table table-bordered w-auto result-table">
-        <thead class="table-light">
-            <tr>
-                <th>Показатель</th>
-                <th>Значение</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Всего строк</td>
-                <td id="total-rows">@result.TotalRows</td>
-            </tr>
-            <tr>
-                <td>Успешно импортировано</td>
-                <td id="imported-count">@result.ImportedCount</td>
-            </tr>
-            <tr>
-                <td>Ошибки</td>
-                <td id="error-count">@result.ErrorCount</td>
-            </tr>
-        </tbody>
-    </table>
-
-    @if (result.Errors.Count > 0)
-    {
-        <h3 class="h4 mt-4">Список ошибок</h3>
-
-        <table class="table table-bordered table-sm errors-table">
-            <thead class="table-light">
+        <table class="data-table result-table mb-3">
+            <thead>
                 <tr>
-                    <th style="width: 100px">Строка</th>
-                    <th>Описание ошибки</th>
+                    <th>Показатель</th>
+                    <th class="num">Значение</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var error in result.Errors)
-                {
-                    <tr>
-                        <td>@(error.RowNumber == ImportConstants.FileErrorRowNumber ? "—" : error.RowNumber.ToString())</td>
-                        <td>@error.Message</td>
-                    </tr>
-                }
+                <tr>
+                    <td>Всего строк</td>
+                    <td id="total-rows">@result.TotalRows</td>
+                </tr>
+                <tr>
+                    <td>Успешно импортировано</td>
+                    <td id="imported-count">@result.ImportedCount</td>
+                </tr>
+                <tr>
+                    <td>Ошибки</td>
+                    <td id="error-count">@result.ErrorCount</td>
+                </tr>
             </tbody>
         </table>
-    }
 
-    <a asp-action="Index" class="btn btn-success">Перейти к списку товаров</a>
+        @if (result.Errors.Count > 0)
+        {
+            <div class="panel-title mt-4">Список ошибок</div>
+            <div class="table-wrap mb-3">
+                <table class="data-table errors-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 90px">Строка</th>
+                            <th>Описание ошибки</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var error in result.Errors)
+                        {
+                            <tr>
+                                <td><span class="row-number">@(error.RowNumber == ImportConstants.FileErrorRowNumber ? "—" : error.RowNumber.ToString())</span></td>
+                                <td>@error.Message</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <a asp-action="Index" class="btn btn-main">Перейти к списку товаров</a>
+    </div>
 }
 
 @section Scripts {
     <script>
+        // Подставляем путь выбранного примера в поле ввода
         document.querySelectorAll('.sample-file').forEach(function (button) {
             button.addEventListener('click', function () {
                 document.getElementById('filePath').value = button.dataset.path;
