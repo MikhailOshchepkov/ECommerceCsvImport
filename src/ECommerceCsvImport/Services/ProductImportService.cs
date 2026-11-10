@@ -210,16 +210,20 @@ namespace ECommerceCsvImport.Services
             // Цена: допускаем и точку, и запятую как разделитель дробной части
             string priceText = GetValue(values, columns, "price").Replace(',', '.');
             decimal price;
-            if (decimal.TryParse(priceText, NumberStyles.Number, CultureInfo.InvariantCulture, out price) && price > 0)
-                product.Price = price;
+            if (!decimal.TryParse(priceText, NumberStyles.Number, CultureInfo.InvariantCulture, out price))
+                errors.Add(ImportMessages.PriceNotNumber);
+            else if (price <= 0)
+                errors.Add(ImportMessages.PriceNotPositive);
             else
-                errors.Add(ImportMessages.InvalidPrice);
+                product.Price = price;
 
             int stock;
-            if (int.TryParse(GetValue(values, columns, "stock"), out stock) && stock >= 0)
-                product.StockQuantity = stock;
+            if (!int.TryParse(GetValue(values, columns, "stock"), out stock))
+                errors.Add(ImportMessages.StockNotInteger);
+            else if (stock < 0)
+                errors.Add(ImportMessages.NegativeStock);
             else
-                errors.Add(ImportMessages.InvalidStock);
+                product.StockQuantity = stock;
 
             string isActive = GetValue(values, columns, "is_active").ToLower();
             if (isActive == "true" || isActive == "1")

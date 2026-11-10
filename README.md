@@ -149,10 +149,10 @@ sku,name,description,price,currency,category_name,stock,image_url,is_active,bran
 | sku | string | да, уникальное | «Поле sku не может быть пустым», «Артикул товара уже существует» |
 | name | string | да | «Поле name не может быть пустым» |
 | description | string | нет | — |
-| price | decimal | да | > 0; «Поле price должно быть числом больше 0» |
+| price | decimal | да | > 0; «Цена должна быть числом», «Цена должна быть больше нуля» |
 | currency | string | нет | пусто → `RUB`, приводится к верхнему регистру |
 | category_name | string | нет | пусто → «Без категории» |
-| stock | int | да | ≥ 0; «Остаток на складе должен быть целым числом не меньше 0» |
+| stock | int | да | ≥ 0; «Остаток на складе должен быть целым числом», «Остаток на складе не может быть отрицательным» |
 | image_url | string | нет | — |
 | is_active | bool | да | true / false / 1 / 0; «Поле is_active должно иметь значение true, false, 1 или 0» |
 | brand | string | да | «Поле brand обязательно для варианта «Электроника»» |

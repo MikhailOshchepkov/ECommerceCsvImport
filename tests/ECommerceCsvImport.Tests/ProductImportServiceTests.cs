@@ -173,7 +173,7 @@ namespace ECommerceCsvImport.Tests
                 "1003,ТВ-приставка Movix Pro Voice,Приставка 4K с голосовым поиском,-500,RUB,ТВ-приставки,12,/images/movix-pro-voice.jpg,true,Movix,12,Movix Pro Voice");
 
             Assert.Equal(0, result.ImportedCount);
-            Assert.Contains(result.Errors, e => e.Message.Contains("Поле price должно быть числом больше 0"));
+            Assert.Contains(result.Errors, e => e.Message.Contains("Цена должна быть больше нуля"));
             Assert.Equal(2, result.Errors[0].RowNumber);
         }
 
@@ -185,7 +185,7 @@ namespace ECommerceCsvImport.Tests
                 "1003,ТВ-приставка Movix Pro Voice,Приставка 4K с голосовым поиском,abc,RUB,ТВ-приставки,12,/images/movix-pro-voice.jpg,true,Movix,12,Movix Pro Voice");
 
             Assert.Equal(0, result.ImportedCount);
-            Assert.Contains(result.Errors, e => e.Message.Contains("Поле price должно быть числом больше 0"));
+            Assert.Contains(result.Errors, e => e.Message.Contains("Цена должна быть числом"));
         }
 
         // Тест 12
@@ -196,7 +196,7 @@ namespace ECommerceCsvImport.Tests
                 "1004,Домашняя камера Omny base Luna 2,Wi-Fi камера Full HD,3490,RUB,Видеонаблюдение,-5,/images/luna2.jpg,true,Omny,12,Luna 2");
 
             Assert.Equal(0, result.ImportedCount);
-            Assert.Contains(result.Errors, e => e.Message.Contains("Остаток на складе должен быть целым числом не меньше 0"));
+            Assert.Contains(result.Errors, e => e.Message.Contains("Остаток на складе не может быть отрицательным"));
         }
 
         // Тест 13

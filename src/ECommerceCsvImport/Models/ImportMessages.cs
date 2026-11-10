@@ -11,8 +11,10 @@ namespace ECommerceCsvImport.Models
 
         public const string EmptySku = "Поле sku не может быть пустым";
         public const string EmptyName = "Поле name не может быть пустым";
-        public const string InvalidPrice = "Поле price должно быть числом больше 0";
-        public const string InvalidStock = "Остаток на складе должен быть целым числом не меньше 0";
+        public const string PriceNotNumber = "Цена должна быть числом";
+        public const string PriceNotPositive = "Цена должна быть больше нуля";
+        public const string StockNotInteger = "Остаток на складе должен быть целым числом";
+        public const string NegativeStock = "Остаток на складе не может быть отрицательным";
         public const string InvalidIsActive = "Поле is_active должно иметь значение true, false, 1 или 0";
         public const string EmptyBrand = "Поле brand обязательно для варианта «Электроника»";
         public const string InvalidWarranty = "Гарантия должна быть целым числом от 0 до 60 месяцев";
